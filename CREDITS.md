@@ -42,4 +42,4 @@ BY-SA 녹음의 발췌본은 원래와 같은 라이선스를 따름.
 
 ## 4. 기타
 - 글꼴: Noto Serif KR, Noto Sans KR, Cormorant Garamond (Google Fonts, SIL OFL)
-- 게임 코드·기획: 음플릭스 두목쌤
+- 게임 코드·기획: 음플릭스 두목쌤 · [▶ 음플릭스 유튜브](https://www.youtube.com/channel/UCQdJppqUSSxlj5Z2eP5SbNQ)

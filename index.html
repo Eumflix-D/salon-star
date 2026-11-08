@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <script>
 // 새 버전 확인: version.json이 바뀌면 처음 몇 초 안에만 한 번 새로고침. 기록(localStorage)은 건드리지 않음
-var SS_VER='2026.11.08-2';
+var SS_VER='2026.11.08-3';
 (function(){var t0=Date.now();function chk(early){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){
  if(!j||!j.v||j.v===SS_VER)return;var g='ss_reload_'+j.v,done=false;try{done=sessionStorage.getItem(g)==='1'}catch(e){}
  fetch('./',{cache:'reload'}).catch(function(){}).then(function(){if(early&&!done&&Date.now()-t0<6000){try{sessionStorage.setItem(g,'1')}catch(e){}location.reload();}});
@@ -318,6 +318,7 @@ body.dim #pauseBtn{pointer-events:none}
 
 /* 대문 */
 .credit{text-align:center;font-size:10px;color:var(--dim);opacity:.7;margin-top:8px;position:relative;z-index:2}
+.credit a.yt{color:var(--gold2);text-decoration:none;font-weight:600}
 .credit button{all:unset;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
 .credl{list-style:none;margin:0;padding:0}.credl li{padding:7px 0;border-bottom:1px solid rgba(217,180,106,.12);font-size:12.5px;line-height:1.5}.credl b{display:block;color:var(--gold2);font-weight:600}.credl span{color:var(--dim);font-size:11.5px}.credc a{color:var(--gold2);white-space:nowrap}
 .tapme{margin-top:40px;font-size:14px;color:var(--gold2);letter-spacing:2px;animation:tw 1.4s ease-in-out infinite alternate}
@@ -711,7 +712,7 @@ body.star #title .plaque{background:linear-gradient(180deg,#fff0b8,#e6bd5c 60%,#
    <button class="soon" data-soon="도전장"><svg viewBox="0 0 24 24"><path d="M6 3h12v5a6 6 0 0 1-12 0zM9 20h6M12 14v6M6 5H3v2a3 3 0 0 0 3 3M18 5h3v2a3 3 0 0 1-3 3"/></svg>배틀 모드</button>
    <button class="openSet"><svg viewBox="0 0 24 24"><use href="#gearI"/></svg>설정</button>
   </div>
-  <div class="credit"><button class="openCred">♪ 음원 출처 · 라이선스</button></div>
+  <div class="credit"><a class="yt" href="https://www.youtube.com/channel/UCQdJppqUSSxlj5Z2eP5SbNQ" target="_blank" rel="noopener">▶ 음플릭스 유튜브</a> · <button class="openCred">♪ 음원 출처 · 라이선스</button></div>
  </div></div>
 </div>
 
@@ -855,7 +856,7 @@ body.star #title .plaque{background:linear-gradient(180deg,#fff0b8,#e6bd5c 60%,#
  <ul class="credl"><li><b>대문 음악 · 모차르트 소나타 K.545 1악장</b><span>연주 Simone Renzi · IMSLP · <a href="https://creativecommons.org/licenses/by-nc/3.0/" target="_blank" rel="noopener">CC BY-NC 3.0</a></span></li><li><b>바흐 평균율 1권 전주곡 C장조</b><span>연주 Chris Breemer · Piano Society · 이용 조건 확인 중</span></li><li><b>파헬벨 캐논</b><span>연주 U.S. Air Force Band Strolling Strings (2004) · Wikimedia Commons · 퍼블릭 도메인 (미국 정부 저작물)</span></li><li><b>비발디 사계 〈봄〉 1악장</b><span>연주 John Harrison & Wichita State Univ. Chamber Players · IMSLP · <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a></span></li><li><b>바흐 G선상의 아리아</b><span>연주 U.S. Air Force Strings, 음반 〈Collage〉(2000) · Wikimedia Commons · 퍼블릭 도메인 (미국 정부 저작물)</span></li><li><b>비발디 조화의 영감 Op.3-6</b><span>연주 San Antonio Symphony · Musopen · 퍼블릭 도메인</span></li><li><b>하이든 소나타 Hob.XVI:27 1악장</b><span>연주 Luis Kolodin · IMSLP · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a></span></li><li><b>모차르트 터키 행진곡</b><span>연주 Luis Kolodin · IMSLP · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a></span></li><li><b>베토벤 엘리제를 위하여</b><span>연주 German Kitkin · IMSLP · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a></span></li><li><b>베토벤 발트슈타인 1악장</b><span>연주 Luis Kolodin · IMSLP · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a></span></li><li><b>모차르트 소나타 K.330 1악장</b><span>연주 Bùi Nguyễn Triệu Tường · IMSLP · <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noopener">CC BY 3.0</a></span></li><li><b>슈만 트로이메라이</b><span>연주 Gabriel Antonio Hernandez Romero · IMSLP · <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span></li><li><b>멘델스존 베네치아의 곤돌라 노래 Op.19-6</b><span>연주 Bui-Nguyen Trieu-Tuong · IMSLP · <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span></li><li><b>차이콥스키 사계 6월 〈뱃노래〉</b><span>연주 Bernd Krueger (piano-midi.de, 컴퓨터 피아노 연주) · Wikimedia Commons · <a href="https://creativecommons.org/licenses/by-sa/2.0/de/" target="_blank" rel="noopener">CC BY-SA 2.0 DE</a></span></li><li><b>쇼팽 연습곡 Op.10-5 〈흑건〉</b><span>연주 Chiara Bertoglio · IMSLP · <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noopener">CC BY 3.0</a></span></li><li><b>리스트 라 캄파넬라</b><span>연주 Nano Yozakura (컴퓨터 연주) · IMSLP · <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noopener">CC BY 3.0</a></span></li><li><b>사티 짐노페디 1번</b><span>연주 Daria Baiocchi · IMSLP · <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener">CC0</a></span></li><li><b>드뷔시 달빛</b><span>연주 Simone Renzi · IMSLP · <a href="https://creativecommons.org/licenses/by-nc/3.0/" target="_blank" rel="noopener">CC BY-NC 3.0</a></span></li><li><b>조플린 메이플 리프 래그</b><span>연주 Stefano Ligoratti · IMSLP · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a></span></li><li><b>라벨 물의 유희</b><span>연주 María Cueva Méndez · IMSLP · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a></span></li><li><b>드뷔시 기쁨의 섬</b><span>연주 Jacopo Salvatori · OnClassical (www.onclassical.com) · <a href="https://creativecommons.org/licenses/by-nc-sa/1.0/" target="_blank" rel="noopener">CC BY-NC-SA 1.0</a></span></li></ul>
  <p class="hint">바꾼 점: 모든 녹음은 곡의 앞부분(일부는 지정 구간) <b>1분만 발췌</b>하고 <b>끝을 3.5초 페이드아웃</b>했어요. 노트는 녹음에 맞춰 화면에 띄웁니다. BY-SA 녹음의 발췌본은 원래와 같은 라이선스를 따릅니다.</p>
  <div class="sec">노트 악보 · 그림 · 글꼴</div>
- <p class="hint">악보 데이터: Mutopia Project(퍼블릭 도메인·CC BY·CC BY-SA), DCML 코퍼스·ASAP dataset(<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>). 그림: 이 게임용 AI 생성. 글꼴: Google Fonts(SIL OFL).<br>게임 코드·기획: 음플릭스 두목쌤<br>비상업·교육용으로 공개합니다.</p>
+ <p class="hint">악보 데이터: Mutopia Project(퍼블릭 도메인·CC BY·CC BY-SA), DCML 코퍼스·ASAP dataset(<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>). 그림: 이 게임용 AI 생성. 글꼴: Google Fonts(SIL OFL).<br>게임 코드·기획: 음플릭스 두목쌤 · <a href="https://www.youtube.com/channel/UCQdJppqUSSxlj5Z2eP5SbNQ" target="_blank" rel="noopener">▶ 음플릭스 유튜브</a><br>비상업·교육용으로 공개합니다.</p>
  <button class="btn" id="credClose">닫기</button>
 </div></div>
 
