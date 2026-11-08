@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <script>
 // 새 버전 확인: version.json이 바뀌면 처음 몇 초 안에만 한 번 새로고침. 기록(localStorage)은 건드리지 않음
-var SS_VER='2026.11.08-5';
+var SS_VER='2026.11.08-6';
 // 아이폰 홈 화면 앱: 화면이 조금이라도 밀리면 그림과 누르는 위치가 어긋남 → 늘 맨 위로 되돌림
 (function(){function fix(){try{if(window.scrollX||window.scrollY||document.documentElement.scrollTop||(document.body&&document.body.scrollTop)){window.scrollTo(0,0);document.documentElement.scrollTop=0;if(document.body)document.body.scrollTop=0;}}catch(e){}}
 ['load','resize','orientationchange','pageshow','focusout','scroll'].forEach(function(ev){window.addEventListener(ev,function(){fix();setTimeout(fix,300);},true);});
@@ -2302,8 +2302,8 @@ $('splash').addEventListener('click',()=>show('title'));
   <div class="tabs"><button id="a2hsI">아이폰</button><button id="a2hsA">안드로이드</button></div>
   <ol id="a2hsStepI">
    <li><b>사파리</b>로 이 페이지를 열어요</li>
-   <li>아래쪽 <b>공유 버튼</b>(네모에 위 화살표 ⬆)을 눌러요</li>
-   <li>목록을 내려 <b>'홈 화면에 추가'</b>를 눌러요</li>
+   <li>주소창 옆 <b>메뉴(≡ 또는 ⋯)</b>나 <b>공유 버튼</b>(네모에 위 화살표 ⬆)을 눌러요</li>
+   <li><b>'공유'</b> → 목록을 내려 <b>'홈 화면에 추가'</b>를 눌러요</li>
    <li>오른쪽 위 <b>'추가'</b> → 홈 화면의 <b>Salon Star</b>로 시작!</li>
   </ol>
   <ol id="a2hsStepA" class="hidden">
