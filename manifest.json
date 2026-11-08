@@ -1,0 +1,17 @@
+{
+  "name": "Salon Star",
+  "short_name": "Salon Star",
+  "description": "살롱 스타 · 두목의 살롱에서 스타 피아니스트로",
+  "lang": "ko",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0c0907",
+  "theme_color": "#0c0907",
+  "icons": [
+    {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
