@@ -4,7 +4,12 @@
 <meta charset="utf-8">
 <script>
 // 새 버전 확인: version.json이 바뀌면 처음 몇 초 안에만 한 번 새로고침. 기록(localStorage)은 건드리지 않음
-var SS_VER='2026.11.08-3';
+var SS_VER='2026.11.08-4';
+// 아이폰 홈 화면 앱: 화면이 조금이라도 밀리면 그림과 누르는 위치가 어긋남 → 늘 맨 위로 되돌림
+(function(){function fix(){try{if(window.scrollX||window.scrollY||document.documentElement.scrollTop||(document.body&&document.body.scrollTop)){window.scrollTo(0,0);document.documentElement.scrollTop=0;if(document.body)document.body.scrollTop=0;}}catch(e){}}
+['load','resize','orientationchange','pageshow','focusout','scroll'].forEach(function(ev){window.addEventListener(ev,function(){fix();setTimeout(fix,300);},true);});
+document.addEventListener('visibilitychange',function(){setTimeout(fix,100);});
+if(window.visualViewport){visualViewport.addEventListener('resize',fix);visualViewport.addEventListener('scroll',fix);}})();
 (function(){var t0=Date.now();function chk(early){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){
  if(!j||!j.v||j.v===SS_VER)return;var g='ss_reload_'+j.v,done=false;try{done=sessionStorage.getItem(g)==='1'}catch(e){}
  fetch('./',{cache:'reload'}).catch(function(){}).then(function(){if(early&&!done&&Date.now()-t0<6000){try{sessionStorage.setItem(g,'1')}catch(e){}location.reload();}});
@@ -20,14 +25,14 @@ chk(true);document.addEventListener('visibilitychange',function(){if(document.vi
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Salon Star">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Noto+Serif+KR:wght@600;800&family=Noto+Sans+KR:wght@400;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#0c0907;--gold:#d9b46a;--gold2:#f3dca0;--ink:#f4ead8;--dim:#b5a48c;--line:#4a3822;--perfect:#ffd76a;--great:#8fd3ff;--good:#9be39b;--miss:#ff7a7a;
  --serif:"Noto Serif KR",serif;--corm:"Cormorant Garamond",serif;--sans:"Noto Sans KR","Apple SD Gothic Neo",system-ui,sans-serif}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:var(--sans);overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+html,body{margin:0;height:100%;position:fixed;inset:0;width:100%;overscroll-behavior:none;background:var(--bg);color:var(--ink);font-family:var(--sans);overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 button{font-family:inherit;cursor:pointer}
 .hidden{display:none!important}
 .serif{font-family:var(--serif)}.corm{font-family:var(--corm);letter-spacing:2px}
@@ -843,6 +848,9 @@ body.star #title .plaque{background:linear-gradient(180deg,#fff0b8,#e6bd5c 60%,#
  <label id="vibRow">MISS 때 진동도 함께 <small style="color:var(--dim);margin-right:auto">(안드로이드)</small><button class="tog" id="tVib"></button></label>
  <label>맞힐 때 빛 효과<button class="tog" id="tFx"></button></label>
  <label>연주 배경 밝기<input type="range" id="vBright" min="0" max="100" step="10"><span class="val" id="vBrightV"></span></label>
+ <div class="sec">싱크 조절</div>
+ <label>노트 타이밍<input type="range" id="vLat" min="-200" max="400" step="10"><span class="val" id="vLatV"></span></label>
+ <div class="hint" style="margin-top:4px">노트가 소리보다 <b>먼저</b> 오면 + 쪽으로, <b>늦게</b> 오면 − 쪽으로. 블루투스 이어폰은 보통 +150~+250.</div>
  <div class="sec">정보</div>
  <button class="btn line openCred" style="width:100%">음원 출처 · 라이선스 보기</button>
  <div class="dev"><button id="devOpen">시험용: 모두 열기</button><button id="devReset">기록 처음부터</button></div>
@@ -1118,7 +1126,8 @@ function judge(it,k,silentText){
  $('combo').textContent=combo>2?combo:'';
  if(!silentText||k==='miss')showJudge(k);
 }
-const now=()=>ctx.currentTime-t0-offset;
+const latSec=()=>((ctx&&(ctx.outputLatency||0)+(ctx.baseLatency||0))||0)+(CFG.lat||0)/1000;
+const now=()=>ctx.currentTime-t0-offset-latSec();
 const pointers=new Map(); // id → 필드 x(0~1)
 let geo={};
 function toU(cx){return Math.max(0,Math.min(1,(cx-geo.cx)/(2*geo.HW)+0.5));}
@@ -1353,7 +1362,7 @@ function cloudSave(){if(!CLOUD.ref)return;clearTimeout(CLOUD.tm);CLOUD.tm=setTim
 var BOOT=true; // 클라우드 기록을 불러오기 전 시작 정리 작업은 '새 기록'으로 치지 않음
 function memSet(k,v){MEM[k]=v;if(!BOOT)MEM.salon3__at=String(Date.now());try{localStorage.setItem(k,v);localStorage.setItem('salon3__at',MEM.salon3__at);}catch(e){}cloudSave();}
 function memDel(k){delete MEM[k];MEM.salon3__at=String(Date.now());try{localStorage.removeItem(k);}catch(e){}cloudSave();}
-let CFG=Object.assign({spd:3,bgm:60,piano:90,sfx:50,vib:false,fx:true,bright:50},(()=>{try{return JSON.parse(MEM.salon3_cfg)||{}}catch(e){return{}}})());
+let CFG=Object.assign({lat:0,spd:3,bgm:60,piano:90,sfx:50,vib:false,fx:true,bright:50},(()=>{try{return JSON.parse(MEM.salon3_cfg)||{}}catch(e){return{}}})());
 if(!CFG.v35){CFG.vib=false;CFG.v35=1;}
 function saveCfg(){memSet('salon3_cfg',JSON.stringify(CFG));}
 let OUT=null,bgmGain=null,sfxGain=null,bgmWant=false;
@@ -1425,7 +1434,7 @@ document.addEventListener('click',e=>{if(e.target.closest('button,a'))sfx('ui');
  const seg=$('spdSeg');
  const drawSeg=()=>seg.querySelectorAll('button').forEach(b=>b.classList.toggle('on',+b.dataset.v===CFG.spd));
  seg.querySelectorAll('button').forEach(b=>b.onclick=()=>{CFG.spd=+b.dataset.v;saveCfg();drawSeg();});drawSeg();
- [['vBgm','bgm'],['vPiano','piano'],['vSfx','sfx'],['vBright','bright']].forEach(([id,k])=>{const el=$(id);el.value=CFG[k];
+ [['vBgm','bgm'],['vPiano','piano'],['vSfx','sfx'],['vBright','bright'],['vLat','lat']].forEach(([id,k])=>{const el=$(id);el.value=CFG[k];
   const upd=()=>{CFG[k]=+el.value;$(id+'V').textContent=el.value;saveCfg();applyCfg();};el.oninput=upd;$(id+'V').textContent=el.value;});
  [['tVib','vib'],['tFx','fx']].forEach(([id,k])=>{const el=$(id);const d=()=>{el.classList.toggle('on',CFG[k]);el.textContent=CFG[k]?'켜짐':'꺼짐';};el.onclick=()=>{CFG[k]=!CFG[k];saveCfg();d();};d();});
  applyCfg();
